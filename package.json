@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "App de transporte por aplicativo (passageiro + motorista) - monorepo",
   "scripts": {
+    "postinstall": "pnpm --filter @moveapp/shared build",
     "backend:dev": "pnpm --filter backend start:dev",
     "backend:build": "pnpm --filter backend build",
     "mobile:start": "pnpm --filter mobile start",
