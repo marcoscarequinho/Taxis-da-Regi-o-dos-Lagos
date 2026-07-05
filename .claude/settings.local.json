@@ -40,7 +40,12 @@
       "Bash(npx eas-cli@latest whoami)",
       "Bash(npx eas-cli@latest init --id 7797fc73-c578-4d45-bd13-02b2406ba49d --non-interactive)",
       "Bash(npx eas-cli@latest init --id 7797fc73-c578-4d45-bd13-02b2406ba49d --force --non-interactive)",
-      "Bash(npx eas-cli@latest build --profile preview --platform android --non-interactive)"
+      "Bash(npx eas-cli@latest build --profile preview --platform android --non-interactive)",
+      "WebFetch(domain:expo.dev)",
+      "Bash(npx eas-cli@latest build:view b7c717ae-7abb-41ac-a5a7-d6b800b60423)",
+      "Bash(npx eas-cli@latest build:view --help)",
+      "Read(//c/Users/marco/.expo/**)",
+      "Bash(npx eas-cli@latest build:view b7c717ae-7abb-41ac-a5a7-d6b800b60423 --json)"
     ]
   }
 }
