@@ -53,7 +53,8 @@
       "Bash(cygpath -w /tmp/eas_build_log_plain.txt)",
       "Bash(pwd -W)",
       "Bash(node --print \"require.resolve\\('@react-native/gradle-plugin/package.json'\\)\")",
-      "Bash(node --print \"require.resolve\\('@react-native-community/cli-platform-android/package.json', { paths: [require.resolve\\('react-native/package.json'\\)] }\\)\")"
+      "Bash(node --print \"require.resolve\\('@react-native-community/cli-platform-android/package.json', { paths: [require.resolve\\('react-native/package.json'\\)] }\\)\")",
+      "Bash(npx eas-cli@latest build:view 96a4281e-cb53-4645-85fb-2132593df9bd --json)"
     ]
   }
 }
