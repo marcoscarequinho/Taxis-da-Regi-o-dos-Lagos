@@ -27,7 +27,6 @@
     },
     "android": {
       "package": "br.com.taxisregiaodoslagos.app",
-      "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0B1B2B"
@@ -56,7 +55,15 @@
           "color": "#0B1B2B"
         }
       ],
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
     ],
     "extra": {
       "apiUrl": "http://localhost:3000",
