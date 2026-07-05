@@ -58,7 +58,17 @@
       "Bash(npx eas-cli@latest build:view 4d878542-6849-48f5-b8bc-e38b0ba1d5ea --json)",
       "Bash(node --print \"require.resolve\\('expo-asset/package.json'\\)\")",
       "Bash(node --print \"require.resolve\\('@react-native/assets-registry/package.json'\\)\")",
-      "Bash(npx expo-doctor *)"
+      "Bash(npx expo-doctor *)",
+      "Bash(npx eas-cli@latest build:view e9cb8698-9b12-4a51-a4f2-750bf8897baa --json)",
+      "Read(//c/Users/marco/OneDrive - Editora e Distribuidora Educacional/**)",
+      "Bash(rm -f eas_log4.brotli eas_log4.txt log_url.txt)",
+      "Bash(node --print \"require.resolve\\('expo-build-properties/app.plugin.js'\\)\")",
+      "Bash(node --print \"require.resolve\\('expo-build-properties'\\)\")",
+      "Bash(echo \"EXIT CODE: $?\")",
+      "Bash(echo \"exit: $?\")",
+      "Bash(node \"../../node_modules/.pnpm/expo@51.0.39_@babel+core@7._c7563c7787d71b347f42a4b974257572/node_modules/expo/bin/cli\" config --json --full --type public)",
+      "Bash(EXPO_DEBUG=1 npx expo config --json --full --type public)",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\('expo-build-properties/package.json'\\), null, 2\\)\\)\")"
     ]
   }
 }
