@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: moveapp-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: moveapp
+      POSTGRES_PASSWORD: moveapp
+      POSTGRES_DB: moveapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - moveapp-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U moveapp"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: moveapp-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - moveapp-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  moveapp-postgres-data:
+  moveapp-redis-data:

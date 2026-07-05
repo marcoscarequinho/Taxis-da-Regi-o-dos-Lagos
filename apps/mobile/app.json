@@ -1,0 +1,71 @@
+{
+  "expo": {
+    "name": "Taxis da Região dos Lagos",
+    "slug": "marcoscarequinho",
+    "scheme": "taxisregiaodoslagos",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#0B1B2B"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "br.com.taxisregiaodoslagos.app",
+      "config": {
+        "googleMapsApiKey": "REPLACE_WITH_IOS_GOOGLE_MAPS_API_KEY"
+      },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Usamos sua localização para encontrar motoristas próximos e calcular rotas.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Usamos sua localização em segundo plano durante a corrida para o rastreamento ao vivo."
+      }
+    },
+    "android": {
+      "package": "br.com.taxisregiaodoslagos.app",
+      "usesCleartextTraffic": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B1B2B"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "REPLACE_WITH_ANDROID_GOOGLE_MAPS_API_KEY"
+        }
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-location",
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#0B1B2B"
+        }
+      ]
+    ],
+    "extra": {
+      "apiUrl": "http://localhost:3000",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "7797fc73-c578-4d45-bd13-02b2406ba49d"
+      }
+    },
+    "owner": "marcoscarequinhos-team"
+  }
+}

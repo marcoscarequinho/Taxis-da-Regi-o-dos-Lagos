@@ -1,0 +1,164 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum BackgroundCheckStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum RideStatus {
+  REQUESTED
+  SEARCHING
+  ACCEPTED
+  ARRIVED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  PIX
+  CARD
+  CASH
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  phone        String   @unique
+  passwordHash String
+  isDriver     Boolean  @default(false)
+  isPassenger  Boolean  @default(true)
+  isAdmin      Boolean  @default(false)
+  avatarUrl    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  driverProfile   DriverProfile?
+  ridesAsPassenger Ride[]        @relation("PassengerRides")
+  ridesAsDriver    Ride[]        @relation("DriverRides")
+  ratingsGiven     Rating[]      @relation("RatingsGiven")
+  ratingsReceived  Rating[]      @relation("RatingsReceived")
+
+  @@map("users")
+}
+
+model DriverProfile {
+  userId                String                @id
+  user                  User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cnhNumber             String
+  cnhDocUrl             String?
+  backgroundCheckStatus BackgroundCheckStatus @default(PENDING)
+  isOnline              Boolean               @default(false)
+  ratingAvg             Float                 @default(5.0)
+
+  // Conta Mercado Pago conectada via OAuth, usada para receber o split (Pix) de cada corrida.
+  mpUserId       String?
+  mpAccessToken  String?
+  mpRefreshToken String?
+  mpConnectedAt  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vehicles Vehicle[]
+
+  @@map("driver_profiles")
+}
+
+model Vehicle {
+  id        String        @id @default(uuid())
+  driverId  String
+  driver    DriverProfile @relation(fields: [driverId], references: [userId], onDelete: Cascade)
+  plate     String        @unique
+  model     String
+  color     String
+  year      Int
+  createdAt DateTime      @default(now())
+
+  @@index([driverId])
+  @@map("vehicles")
+}
+
+model Ride {
+  id          String     @id @default(uuid())
+  passengerId String
+  passenger   User       @relation("PassengerRides", fields: [passengerId], references: [id])
+  driverId    String?
+  driver      User?      @relation("DriverRides", fields: [driverId], references: [id])
+  status      RideStatus @default(REQUESTED)
+
+  originLat        Float
+  originLng        Float
+  originAddress    String
+  destinationLat   Float
+  destinationLng   Float
+  destinationAddress String
+
+  distanceKm     Float?
+  durationMin    Float?
+  estimatedFare  Float?
+  finalFare      Float?
+  paymentMethod  PaymentMethod
+  routePolyline  String?
+
+  requestedAt DateTime  @default(now())
+  acceptedAt  DateTime?
+  startedAt   DateTime?
+  completedAt DateTime?
+  cancelledAt DateTime?
+
+  payment Payment?
+  ratings Rating[]
+
+  @@index([passengerId])
+  @@index([driverId])
+  @@index([status])
+  @@map("rides")
+}
+
+model Payment {
+  id                   String        @id @default(uuid())
+  rideId               String        @unique
+  ride                 Ride          @relation(fields: [rideId], references: [id], onDelete: Cascade)
+  amount               Float
+  method               PaymentMethod
+  status               PaymentStatus @default(PENDING)
+  providerTransactionId String?
+  paidAt               DateTime?
+  createdAt            DateTime      @default(now())
+
+  @@map("payments")
+}
+
+model Rating {
+  id         String   @id @default(uuid())
+  rideId     String
+  ride       Ride     @relation(fields: [rideId], references: [id], onDelete: Cascade)
+  fromUserId String
+  fromUser   User     @relation("RatingsGiven", fields: [fromUserId], references: [id])
+  toUserId   String
+  toUser     User     @relation("RatingsReceived", fields: [toUserId], references: [id])
+  score      Int
+  comment    String?
+  createdAt  DateTime @default(now())
+
+  @@index([rideId])
+  @@index([toUserId])
+  @@map("ratings")
+}
